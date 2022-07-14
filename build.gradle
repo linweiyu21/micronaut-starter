@@ -2,3 +2,10 @@ plugins {
     id "io.micronaut.internal.starter.aggregator"
     id "io.micronaut.build.internal.dependency-updates"
 }
+
+allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        mavenCentral()
+    }
+}
