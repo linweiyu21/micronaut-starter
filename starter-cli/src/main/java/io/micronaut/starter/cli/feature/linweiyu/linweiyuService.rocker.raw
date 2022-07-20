@@ -1,0 +1,28 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project,
+String entityName
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import groovy.util.logging.Slf4j
+import io.micronaut.validation.Validated
+import jakarta.inject.Singleton
+import @(project.getPackageName()).data.@(project.getPropertyName()).@(entityName)
+
+@@Singleton
+@@Slf4j
+@@Validated
+class @(entityName)Service {
+    private final @(entityName) @(project.getPropertyName())
+
+    @(entityName)Service(@(entityName) @(project.getPropertyName())) {
+        this.@(project.getPropertyName()) = @(project.getPropertyName())
+    }
+
+}

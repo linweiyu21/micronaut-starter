@@ -1,0 +1,50 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project,
+String idTypeImport,
+String idType,
+String entityName,
+io.micronaut.starter.cli.feature.linweiyu.entity.EntityContentCode entityContentCode
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import groovy.transform.Canonical
+import groovy.transform.CompileStatic
+import io.micronaut.core.annotation.Introspected
+import io.micronaut.core.annotation.NonNull
+import io.micronaut.core.annotation.Nullable
+import io.micronaut.core.convert.ConversionContext
+import io.micronaut.data.annotation.*
+import io.micronaut.data.model.runtime.convert.AttributeConverter
+import io.micronaut.data.repository.reactive.ReactorPageableRepository
+import jakarta.inject.Singleton
+import jakarta.persistence.Column
+import reactor.core.publisher.Mono
+
+import javax.validation.constraints.Future
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
+import java.time.LocalDateTime
+
+interface @(entityName)GeneratedRepository extends ReactorPageableRepository<@(entityName)Entity, @idType> {
+    @for (field : entityContentCode.getFields()) {
+    @if (!field.getName().equals("id")
+            && !field.getCommentEntity().getAnnotations().contains("@Version")
+            && !field.getCommentEntity().getAnnotations().contains("@DateUpdated")
+            && !field.getCommentEntity().getAnnotations().contains("@DateCreated")) {
+    Mono<Long> update@(cn.hutool.core.util.StrUtil.upperFirst(field.getName()))(@@Id Long id, @if(entityContentCode.getHasVersionField()){@@Version version, }@for(String constraintsAnnotation : field.getConstraintsAnnotations()){@constraintsAnnotation }@if(field.getCommentEntity().getEnums() == null || field.getCommentEntity().getEnums().size() < 1){@field.getType()}@if(field.getCommentEntity().getEnums() != null && field.getCommentEntity().getEnums().size() > 1){@(entityName)Entity.@field.getType()} @field.getName())
+
+    }
+    }
+    @@MappedEntity(value = '@project.getName()')
+    @@Canonical
+    @@Introspected
+    static class @(entityName)Entity {
+@(entityContentCode.getEntityContent())
+    }
+}

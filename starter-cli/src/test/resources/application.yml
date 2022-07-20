@@ -1,0 +1,21 @@
+micronaut:
+  application:
+    name: mnDataTest
+r2dbc:
+  datasources:
+    default:
+      url: r2dbc:mysql://YOUR_CONFIG_HERE
+      username: YOUR_CONFIG_HERE
+      password: YOUR_CONFIG_HERE
+      dialect: MYSQL
+netty:
+  default:
+    allocator:
+      max-order: 3
+# entity 生成需要的配置
+entityGenerateSettings:
+  url: jdbc:mysql://YOUR_CONFIG_HERE
+  username: YOUR_CONFIG_HERE
+  password: YOUR_CONFIG_HERE
+  driverClassName: com.mysql.cj.jdbc.Driver
+# entity 生成需要的配置

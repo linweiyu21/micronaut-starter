@@ -1,0 +1,23 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project,
+String dialect,
+String entityName
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+
+import io.micronaut.data.model.query.builder.sql.Dialect
+import io.micronaut.data.r2dbc.annotation.R2dbcRepository
+import io.micronaut.validation.Validated
+
+@@R2dbcRepository(dialect = Dialect.@(dialect))
+@@Validated
+abstract class @(entityName) implements @(entityName)GeneratedRepository {
+
+}

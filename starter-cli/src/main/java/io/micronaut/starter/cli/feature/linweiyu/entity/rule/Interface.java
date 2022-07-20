@@ -1,0 +1,17 @@
+package io.micronaut.starter.cli.feature.linweiyu.entity.rule;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Represents an interface.
+ */
+@Data
+public class Interface implements Serializable {
+
+    private String name;
+    private List<String> genericsClassNames = new ArrayList<>();
+}

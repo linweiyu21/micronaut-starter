@@ -2,6 +2,12 @@ plugins {
     id 'io.micronaut.internal.build.starter-cli-module'
 }
 
+repositories {
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
 ext {
     picocliVersion = '4.6.3'
 }
@@ -18,6 +24,8 @@ configurations.all {
 }
 
 dependencies {
+    annotationProcessor('org.projectlombok:lombok:1.18.2')
+    
     annotationProcessor("io.micronaut:micronaut-graal")
     api project(":starter-core")
     api "info.picocli:picocli:${picocliVersion}"
@@ -43,6 +51,21 @@ dependencies {
     testImplementation "org.testcontainers:spock"
     testImplementation 'org.reflections:reflections:0.10.2'
     testImplementation 'org.codehaus.groovy:groovy-xml'
+    
+    implementation 'cn.hutool:hutool-core:5.8.4'
+    implementation 'cn.hutool:hutool-json:5.8.4'
+    
+    // entity 生成工具需要的依赖
+    implementation 'com.google.guava:guava:26.0-jre'
+    implementation 'org.apache.commons:commons-lang3:3.8.1'
+    implementation 'org.freemarker:freemarker:2.3.28'
+    implementation 'org.yaml:snakeyaml:1.23'
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    runtimeOnly("mysql:mysql-connector-java")
+    
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly 'org.projectlombok:lombok:1.18.2'
+    // entity 生成工具需要的依赖
 }
 
 application {
