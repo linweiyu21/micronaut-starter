@@ -136,20 +136,22 @@ public class CreateAllCommand extends CodeGenCommand {
     }
 
     private void createServiceSpec(Project project, TemplateRenderer templateRenderer) throws Exception {
-        RenderResult repositoryRenderResult = templateRenderer.render(new RockerTemplate("src/test/groovy/{packagePath}/service/{className}ServiceSpec.groovy",
+        final String entityName = StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName()));
+        RenderResult repositoryRenderResult = templateRenderer.render(new RockerTemplate("src/test/groovy/{packagePath}/service/"+ entityName +"ServiceSpec.groovy",
                                                                                          linweiyuServiceSpec.template(
                                                                                                  project,
-                                                                                                 StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName()))
+                                                                                                 entityName
                                                                                          )),
                                                                       false);
         renderResultProcess(repositoryRenderResult);
     }
 
     private void createService(Project project, TemplateRenderer templateRenderer) throws Exception {
-        RenderResult repositoryRenderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/service/{className}Service.groovy",
+        final String entityName = StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName()));
+        RenderResult repositoryRenderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/service/"+ entityName +"Service.groovy",
                                                                                          linweiyuService.template(
                                                                                                  project,
-                                                                                                 StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName()))
+                                                                                                 entityName
                                                                                          )),
                                                                       false);
         renderResultProcess(repositoryRenderResult);
@@ -159,11 +161,13 @@ public class CreateAllCommand extends CodeGenCommand {
      * 生成实际的使用了 @R2dbcRepository 修饰的 Repository 类
      */
     private void createActualRepository(Project project, TemplateRenderer templateRenderer, String dialect, String tablePackageName) throws Exception {
-        RenderResult repositoryRenderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/data/" + tablePackageName + "/{className}.groovy",
+        final String entityName = StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName()));
+        RenderResult repositoryRenderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/data/" + tablePackageName + "/"+ entityName +".groovy",
                                                                                          linweiyuActualRepository.template(
                                                                                                  project,
                                                                                                  dialect,
-                                                                                                 StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName()))
+                                                                                                 tablePackageName,
+                                                                                                 entityName
                                                                                          )),
                                                                       false);
         renderResultProcess(repositoryRenderResult);
@@ -183,12 +187,13 @@ public class CreateAllCommand extends CodeGenCommand {
                                                  .orElse(null));
 
 
-        RenderResult repositoryRenderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/data/" + tablePackageName + "/{className}" + GENERATED_REPOSITORY_SUFFIX,
+        final String entityName = StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName()));
+        RenderResult repositoryRenderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/data/" + tablePackageName + "/" + entityName + GENERATED_REPOSITORY_SUFFIX,
                                                                                          linweiyuBaseRepository.template(project,
                                                                                                                          idTypeImport,
                                                                                                                          idType,
                                                                                                                          tablePackageName,
-                                                                                                                         StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName())),
+                                                                                                                         entityName,
                                                                                                                          entityContentCode
                                                                                          )),
                                                                       overwrite);

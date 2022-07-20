@@ -131,8 +131,6 @@ public class CodeGeneratorConfig implements Serializable {
     // If you don't need to specify the `strategy`, set null value.
     private String generatedValueStrategy = "IDENTITY";
 
-    private String outputDirectory = "src/main/java";
-    private String packageName = "com.smartnews.db";
     private String packageNameForJpa1 = "com.smartnews.db.jpa1";
     private boolean jpa1SupportRequired;
     private boolean jsr305AnnotationsRequired = true;

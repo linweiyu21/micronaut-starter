@@ -3,11 +3,12 @@
 @args (
 Project project,
 String dialect,
+String tablePackageName,
 String entityName
 )
 
 @if (project.getPackageName() != null) {
-package @(project.getPackageName()).data.@(project.getPropertyName())
+package @(project.getPackageName()).data.@(tablePackageName)
 }
 
 

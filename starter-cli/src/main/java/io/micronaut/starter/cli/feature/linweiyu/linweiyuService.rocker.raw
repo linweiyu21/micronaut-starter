@@ -13,7 +13,7 @@ package @(project.getPackageName()).service
 import groovy.util.logging.Slf4j
 import io.micronaut.validation.Validated
 import jakarta.inject.Singleton
-import @(project.getPackageName()).data.@(project.getPropertyName()).@(entityName)
+import @(project.getPackageName()).data.@(cn.hutool.core.text.CharSequenceUtil.lowerFirst(entityName)).@(entityName)
 
 @@Singleton
 @@Slf4j

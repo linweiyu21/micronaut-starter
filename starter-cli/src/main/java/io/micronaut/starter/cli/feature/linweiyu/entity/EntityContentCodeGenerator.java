@@ -65,10 +65,6 @@ public class EntityContentCodeGenerator {
      * Generates all entities from existing tables.
      */
     public static EntityContentCode generateAll(CodeGeneratorConfig originalConfig, boolean isJpa1, List<String> providedTableNames) throws SQLException, IOException, TemplateException {
-        Path dir = Paths.get(originalConfig.getOutputDirectory() + "/" +
-                                     (isJpa1 ? originalConfig.getPackageNameForJpa1().replaceAll("\\.", "/") : originalConfig.getPackageName().replaceAll("\\.", "/")));
-        Files.createDirectories(dir);
-
         TableMetadataFetcher metadataFetcher = new TableMetadataFetcher();
         List<String> allTableNames = CollUtil.isNotEmpty(providedTableNames)
                                      ? providedTableNames
@@ -86,12 +82,6 @@ public class EntityContentCodeGenerator {
             CodeRenderer.RenderingData data = new CodeRenderer.RenderingData();
             data.setJpa1Compatible(isJpa1);
             data.setRequireJSR305(config.isJsr305AnnotationsRequired());
-
-            if (isJpa1) {
-                data.setPackageName(config.getPackageNameForJpa1());
-            } else {
-                data.setPackageName(config.getPackageName());
-            }
 
             String className = NameConverter.toClassName(table.getName(), config.getClassNameRules());
             data.setClassName(className);
