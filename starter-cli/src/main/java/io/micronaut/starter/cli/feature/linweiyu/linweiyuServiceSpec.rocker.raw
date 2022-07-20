@@ -1,0 +1,27 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project,
+String entityName
+)
+
+@if (project.getPackageName() != null) {
+package @(project.getPackageName()).service
+}
+
+
+import groovy.util.logging.Slf4j
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
+import @(project.getPackageName()).service.@(entityName)Service
+import spock.lang.Specification
+
+
+@@MicronautTest(startApplication = false)
+@@Slf4j
+class @(entityName)ServiceSpec extends Specification {
+
+    @@Inject
+    @(entityName)Service @(project.getPropertyName())Service
+
+}

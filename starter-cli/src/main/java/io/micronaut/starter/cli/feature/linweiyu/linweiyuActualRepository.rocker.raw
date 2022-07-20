@@ -7,7 +7,7 @@ String entityName
 )
 
 @if (project.getPackageName() != null) {
-package @project.getPackageName()
+package @(project.getPackageName()).data.@(project.getPropertyName())
 }
 
 

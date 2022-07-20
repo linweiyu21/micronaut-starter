@@ -9,7 +9,7 @@ io.micronaut.starter.cli.feature.linweiyu.entity.EntityContentCode entityContent
 )
 
 @if (project.getPackageName() != null) {
-package @project.getPackageName()
+package @(project.getPackageName()).data.@(project.getPropertyName())
 }
 
 

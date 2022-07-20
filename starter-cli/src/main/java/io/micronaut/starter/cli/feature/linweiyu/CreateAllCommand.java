@@ -116,7 +116,7 @@ public class CreateAllCommand extends CodeGenCommand {
                                                 .filter(Objects::nonNull)
                                                 .findFirst()
                                                 .map(DatabaseDriverFeature::getDataDialect)
-                                                .orElse(null) : null;
+                                                .orElse("MYSQL") : "MYSQL";
 
         // 实际生成的地方
         {
@@ -128,9 +128,21 @@ public class CreateAllCommand extends CodeGenCommand {
             createActualRepository(project, templateRenderer, dialect, tablePackageName);
 
             createService(project, templateRenderer);
+
+            createServiceSpec(project, templateRenderer);
         }
 
         return 0;
+    }
+
+    private void createServiceSpec(Project project, TemplateRenderer templateRenderer) throws Exception {
+        RenderResult repositoryRenderResult = templateRenderer.render(new RockerTemplate("src/test/groovy/{packagePath}/service/{className}ServiceSpec.groovy",
+                                                                                         linweiyuServiceSpec.template(
+                                                                                                 project,
+                                                                                                 StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName()))
+                                                                                         )),
+                                                                      false);
+        renderResultProcess(repositoryRenderResult);
     }
 
     private void createService(Project project, TemplateRenderer templateRenderer) throws Exception {
