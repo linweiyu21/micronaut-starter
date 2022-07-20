@@ -56,6 +56,10 @@ public class CreateAllCommand extends CodeGenCommand {
     String tableName;
 
     @ReflectiveAccess
+    @CommandLine.Parameters(index = "1", paramLabel = "CONFIG-FILE", description = "保存了生成 Entity 代码需要的配置的文件相对路径")
+    String configRelativePath = "./src/main/resources/entity-generate.yml";
+
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-i", "--idType"}, description = "Specify custom id type [Integer, Long, String] or full package name [ie. com.corp.Book] - Defaults to Long")
     String idType = "Long";
 
@@ -119,7 +123,7 @@ public class CreateAllCommand extends CodeGenCommand {
             // 将类名转换为首字母小写的驼峰命名形式
             final String tablePackageName = StrUtil.lowerFirst(StrUtil.toCamelCase(tableName));
 
-            createBaseRepository(project, idTypeImport, templateRenderer, tablePackageName);
+            createBaseRepository(project, idTypeImport, templateRenderer, tablePackageName, configRelativePath);
 
             createActualRepository(project, templateRenderer, dialect, tablePackageName);
 
@@ -156,9 +160,9 @@ public class CreateAllCommand extends CodeGenCommand {
     /**
      * 生成 GeneratedRepository 类
      */
-    private void createBaseRepository(Project project, String idTypeImport, TemplateRenderer templateRenderer, String tablePackageName) throws Exception {
+    private void createBaseRepository(Project project, String idTypeImport, TemplateRenderer templateRenderer, String tablePackageName, String configRelativePath) throws Exception {
         // 生成 entity 的内容体
-        final EntityContentCode entityContentCode = EntityContentCodeGenerator.generate(tableName);
+        final EntityContentCode entityContentCode = EntityContentCodeGenerator.generate(tableName, configRelativePath);
         // 将 entity 内容体中的每一行开头都添加 \t
         final BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(entityContentCode.getEntityContent().getBytes(StandardCharsets.UTF_8))));
         entityContentCode.setEntityContent(reader.lines()

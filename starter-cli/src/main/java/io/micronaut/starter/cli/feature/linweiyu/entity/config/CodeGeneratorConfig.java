@@ -158,12 +158,8 @@ public class CodeGeneratorConfig implements Serializable {
 
     private static final Yaml YAML = new Yaml();
 
-    public static CodeGeneratorConfig load() throws IOException {
-        return CodeGeneratorConfig.load("application.yml");
-    }
-
     public static CodeGeneratorConfig load(String path) throws IOException {
-        try (InputStream is = ResourceReader.getResourceAsStream(path)) {
+        try (InputStream is = ResourceReader.getResourceFromRelativePathAsStream(path)) {
             try (Reader reader = new InputStreamReader(is)) {
                 Representer representer = new Representer();
                 representer.getPropertyUtils().setSkipMissingProperties(true);

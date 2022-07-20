@@ -26,6 +26,7 @@ class CreateAllSpec extends CommandSpec implements CommandFixture {
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateAllCommand command = new CreateAllCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput, beanContext.getBeansOfType(DatabaseDriverFeature).toList())
         command.tableName = entityName
+        command.configRelativePath = configRelativePath
         
         when:
             Integer exitCode = command.call()
@@ -52,6 +53,7 @@ class CreateAllSpec extends CommandSpec implements CommandFixture {
         where:
             language << Language.GROOVY
             entityName = 'robot'
+            configRelativePath = '/Users/daisy/Documents/Linweiyu/micronaut-starter/starter-cli/build/resources/test/entity-generate.yml'
     }
     
 }

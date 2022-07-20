@@ -11,12 +11,17 @@ class CreateEntitySpec extends Specification {
     @Unroll
     void "test creating entity"() {
         when:
-            def result = EntityContentCodeGenerator.generate('robot')
+            def result = EntityContentCodeGenerator.generate(tableName, path)
+        
         then:
             result
             println '---'
             print result
             println '---'
+        
+        where:
+            tableName | path
+            'robot'   | './src/main/resource/entity-generate.yml'
     }
     
 }

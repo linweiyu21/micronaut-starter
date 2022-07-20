@@ -57,8 +57,8 @@ public class EntityContentCodeGenerator {
         return isPrimaryKey || hasIdAnnotation;
     };
 
-    public static EntityContentCode generate(String tableName) throws SQLException, IOException, TemplateException {
-        return generateAll(CodeGeneratorConfig.load(), false, CollUtil.list(true, tableName));
+    public static EntityContentCode generate(String tableName, String path) throws SQLException, IOException, TemplateException {
+        return generateAll(CodeGeneratorConfig.load(path), false, CollUtil.list(true, tableName));
     }
 
     /**

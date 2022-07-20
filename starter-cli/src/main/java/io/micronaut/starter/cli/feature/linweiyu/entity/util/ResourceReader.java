@@ -1,5 +1,7 @@
 package io.micronaut.starter.cli.feature.linweiyu.entity.util;
 
+import cn.hutool.core.io.FileUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,6 +22,10 @@ public class ResourceReader {
         }
         InputStream fileResource = new FileInputStream(new File(path));
         return fileResource;
+    }
+
+    public static InputStream getResourceFromRelativePathAsStream(String relativePath) {
+        return FileUtil.getInputStream(relativePath);
     }
 
 }

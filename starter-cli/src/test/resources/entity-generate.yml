@@ -1,0 +1,7 @@
+# entity 生成需要的配置
+entityGenerateSettings:
+  url: jdbc:mysql://YOUR_CONFIG/YOUR_CONFIG
+  username: YOUR_CONFIG
+  password: YOUR_CONFIG
+  driverClassName: com.mysql.cj.jdbc.Driver
+# entity 生成需要的配置
