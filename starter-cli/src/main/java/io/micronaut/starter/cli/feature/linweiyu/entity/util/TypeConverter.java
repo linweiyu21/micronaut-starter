@@ -39,7 +39,7 @@ public class TypeConverter {
             case Types.FLOAT:
                 return "Float";
             case Types.INTEGER:
-                return "Integer";
+                return "Long";
             // case Types.JAVA_OBJECT:
             // case Types.LONGNVARCHAR:
             // case Types.LONGVARBINARY:
