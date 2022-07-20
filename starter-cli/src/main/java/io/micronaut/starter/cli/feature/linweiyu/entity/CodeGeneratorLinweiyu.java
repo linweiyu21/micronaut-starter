@@ -33,7 +33,7 @@ public class CodeGeneratorLinweiyu {
     static void process(String tableName, CodeRenderer.RenderingData data, Column c, CodeRenderer.RenderingData.Field f) {
         // 计算属性的枚举类型名称
         final String propertyEnumName = StrUtil.format("{}{}",
-                                                       StrUtil.upperFirst(tableName), StrUtil.upperFirst(f.getName()));
+                                                       StrUtil.upperFirst(StrUtil.toCamelCase(tableName)), StrUtil.upperFirst(f.getName()));
 
         // 判断是否要添加空注解
         {
@@ -92,22 +92,19 @@ public class CodeGeneratorLinweiyu {
             }
         }
 
-        // 为枚举类型添加默认值
+        // 默认值处理
         {
             if (StrUtil.isNotBlank(f.getCommentEntity().getInitialValue())) {
                 if (CollUtil.isNotEmpty(f.getCommentEntity().getEnums())) {
+                    // 为枚举类型添加默认值
                     f.setDefaultValue(StrUtil.format("{}.{}", propertyEnumName, f.getCommentEntity().getInitialValue()));
-                }
-            }
-        }
-
-        // 为普通类型添加默认值
-        {
-            if (StrUtil.isNotBlank(f.getCommentEntity().getInitialValue())) {
-                if (StrUtil.equals(f.getCommentEntity().getInitialValue(), INITIAL_VALUE_BLANK_STRING)) {
-                    f.setDefaultValue(INITIAL_VALUE_BLANK_STRING_VALUE);
                 } else {
-                    f.setDefaultValue(f.getCommentEntity().getInitialValue());
+                    // 为普通类型添加默认值
+                    if (StrUtil.equals(f.getCommentEntity().getInitialValue(), INITIAL_VALUE_BLANK_STRING)) {
+                        f.setDefaultValue(INITIAL_VALUE_BLANK_STRING_VALUE);
+                    } else {
+                        f.setDefaultValue(f.getCommentEntity().getInitialValue());
+                    }
                 }
             }
         }

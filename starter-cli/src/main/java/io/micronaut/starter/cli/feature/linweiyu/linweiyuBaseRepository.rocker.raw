@@ -4,12 +4,13 @@
 Project project,
 String idTypeImport,
 String idType,
+String tablePackageName,
 String entityName,
 io.micronaut.starter.cli.feature.linweiyu.entity.EntityContentCode entityContentCode
 )
 
 @if (project.getPackageName() != null) {
-package @(project.getPackageName()).data.@(project.getPropertyName())
+package @(project.getPackageName()).data.@(tablePackageName)
 }
 
 

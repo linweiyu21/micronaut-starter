@@ -187,6 +187,7 @@ public class CreateAllCommand extends CodeGenCommand {
                                                                                          linweiyuBaseRepository.template(project,
                                                                                                                          idTypeImport,
                                                                                                                          idType,
+                                                                                                                         tablePackageName,
                                                                                                                          StrUtil.upperFirst(StrUtil.toCamelCase(project.getPropertyName())),
                                                                                                                          entityContentCode
                                                                                          )),
